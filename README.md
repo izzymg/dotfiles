@@ -26,3 +26,7 @@ monospace: `Noto Mono`
 Copy and edit the `awesome/` wm theme to .config/
 
 You'll need to remove the exec compton call at the end of rc.lua and change any variables or keybinds (dmenu etc)
+
+Edit `awesome/isa.lua` (theme file) to set fonts and so on
+
+Copy `Xresources` to `~/.Xresources`, edit and run `xrdb -merge .Xresources`

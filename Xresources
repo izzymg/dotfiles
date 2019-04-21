@@ -1,0 +1,44 @@
+! Xresources
+
+! Font
+URxvt.font: 			xft:Fira Code:size=9
+URxvt.letterSpacing: 		-1
+
+! Scrollbar
+URxvt.scrollTtyOutput: 		false
+URxvt.scrollWithBuffer: 	true
+URxvt.scrollTtyKeypress: 	true
+URxvt.scrollBar: 		false
+
+! Colors
+
+URxvt.background: 		#1b1b1b
+URxvt.foreground:		#f4f4f4
+
+! Black
+URxvt.color0:           	#131313
+URxvt.color8:           	#131313
+
+! Red
+URxvt.color1:           	#8B4747
+URxvt.color9:           	#AF6868
+
+! Green
+URxvt.color2:           	#5B8360
+URxvt.color10:			#43904C
+
+! Yellow
+URxvt.color3:			#C28446
+URxvt.color11:			#C28446
+
+! Blue
+URxvt.color4:           	#718CCC
+URxvt.color12:          	#718CCC
+
+! Magenta
+URxvt.color5:           	#8B7899
+URxvt.color13:          	#8B7899
+
+! Cyan
+URxvt.color6:           	#7792a9
+URxvt.color14: 			#7AA4CA
