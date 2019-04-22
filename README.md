@@ -5,15 +5,15 @@
 
 #### Window Manager, GTK-2
 
-`CtrlD` (bitmap)
+[Leggie](https://github.com/Tecate/bitmap-fonts/tree/master/bitmap)
 
 #### Terminal:
 
-`Fira Code`
+[Fira Code](https://github.com/tonsky/FiraCode/releases)
 
 #### VS Code:
 
-`Fira Code`
+[Fira Code](https://github.com/tonsky/FiraCode/releases)
 
 #### Fontconfig (Firefox, GTK-3)
 

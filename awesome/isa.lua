@@ -11,7 +11,7 @@ local theme = {}
 
 theme.wallpaper = "~/Pictures/Wallpapers/flowers-1440p.jpg"
 
-theme.font          = "CtrlD 10"
+theme.font          = "Leggie 8"
 
 theme.bg_normal     = "#2b2b2b"
 theme.bg_focus      = "#6f6670"

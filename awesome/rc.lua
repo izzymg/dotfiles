@@ -192,6 +192,9 @@ awful.screen.connect_for_each_screen(function(s)
         layout = {
             spacing = 0,
             layout = wibox.layout.fixed.horizontal
+        },
+        style = {
+            tasklist_disable_icon = true,
         }
     }
 
