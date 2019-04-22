@@ -37,11 +37,29 @@ do
     end)
 end
 beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/isa.lua")
-terminal = "urxvt"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
 modkey = "Mod4"
+
+local function run_screenshot(fullscreen)
+    -- Default to selection
+    local flag = "-s"
+    local notif = "Selecting area for screenshot"
+    if fullscreen then
+        notif = "Screenshot"
+        -- Multiple monitor stitch flag
+        flag = "-m"
+    end
+    naughty.notify({
+        preset = naughty.config.presets.low,
+        title = "Screenshot",
+        text = notif
+    })
+    -- https://www.reddit.com/r/awesomewm/comments/7ktca8/hotkey_for_scrot_s_not_working_while_scrot_and/
+    awful.spawn.with_shell("sleep 0.2 && scrot " .. flag .. " -e 'mv $f ~/Pictures/Screenshots/ss.$$(date +%d-%m-%y.%H:%M:%S).png'", false)
+end
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -67,6 +85,16 @@ awful.layout.layouts = {
 clickmenu = awful.menu({
     items = {
         { "Term", terminal },
+        { "Firefox",
+            function()
+                awful.spawn.with_shell("firefox", false)
+            end
+        },
+        { "Screenshot",
+            function()
+                run_screenshot(false)
+            end
+        },
         { "Hotkeys",
             function()
                 hotkeys_popup.show_help(nil, awful.screen.focused())
@@ -338,25 +366,14 @@ globalkeys = gears.table.join(
 
     -- Scrot
     awful.key({  }, "Print",
-        function ()
-            naughty.notify({
-                preset = naughty.config.presets.low,
-                title = "Screenshot",
-                text = "Selecting area for screenshot"
-            })
-            -- https://www.reddit.com/r/awesomewm/comments/7ktca8/hotkey_for_scrot_s_not_working_while_scrot_and/
-            awful.spawn.with_shell("sleep 0.2 && scrot -s -e 'mv $f ~/Pictures/Screenshots/ss.$$(date +%d-%m-%y.%H:%M:%S).png'", false)
+        function()
+            run_screenshot(false)
         end,
         { description = "scrot", group = "awesome" }
     ),
     awful.key({ "Shift" }, "Print",
         function ()
-            awful.spawn.with_shell("scrot -m -e 'mv $f ~/Pictures/Screenshots/ss.$$(date +%d-%m-%y.%H:%M:%S).png'", false)
-            naughty.notify({
-                preset = naughty.config.presets.low,
-                title = "Screenshot",
-                text = "Screenshot taken"
-            })
+            run_screenshot(true)
         end,
         { description = "scrot", group = "awesome" }
     )
