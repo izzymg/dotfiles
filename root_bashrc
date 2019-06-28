@@ -1,0 +1,11 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls -l --color=auto'
+export PS1='\[\e[91m\]\u\[\e[37m\]@\[\e[91m\]\h\[\e[37m\] \W : '
+export XDG_CONFIG_HOME="/$HOME/.config"
+export EDITOR=vim
