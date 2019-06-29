@@ -13,7 +13,6 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
-
 if awesome.startup_errors then
     naughty.notify({
         preset = naughty.config.presets.critical,
@@ -30,36 +29,31 @@ do
         if in_error then return end
         in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
+        naughty.notify({
+            preset = naughty.config.presets.critical,
+            title = "Oops, an error happened!",
+            text = tostring(err) }
+        )
         in_error = false
     end)
 end
 beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/isa.lua")
-terminal = "kitty"
-editor = os.getenv("EDITOR") or "nano"
-editor_cmd = terminal .. " -e " .. editor
 
-modkey = "Mod4"
+local network_status = require("network_status")
 
-local function run_screenshot(fullscreen)
-    -- Default to selection
-    local flag = "-s"
-    local notif = "Selecting area for screenshot"
-    if fullscreen then
-        notif = "Screenshot"
-        -- Multiple monitor stitch flag
-        flag = "-m"
-    end
+-- Try to pull configuration, pull default conf and notify on failure
+local isa_conf_status, isa_conf = pcall(require, "config.config")
+if not isa_conf_status then
+    isa_conf = require("config.default")
     naughty.notify({
         preset = naughty.config.presets.low,
-        title = "Screenshot",
-        text = notif
+        title = "Configuration",
+        text = "Failed to load config/config.lua, loaded from default"
     })
-    -- https://www.reddit.com/r/awesomewm/comments/7ktca8/hotkey_for_scrot_s_not_working_while_scrot_and/
-    awful.spawn.with_shell("sleep 0.2 && scrot " .. flag .. " -e 'mv $f ~/Pictures/Screenshots/ss.$$(date +%d-%m-%y.%H:%M:%S).png'", false)
 end
+
+terminal = isa_conf.terminal or "xterm"
+modkey = isa_conf.modkey or "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -109,11 +103,36 @@ clickmenu = awful.menu({
     }
 })
 -- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+menubar.utils.terminal = terminal
 
 -- Wibar
 -- Create a textclock widget
 textclock = wibox.widget.textclock()
+
+-- Blank space
+textseparator = wibox.widget{
+    text = "   ",
+    widget = wibox.widget.textbox
+}
+
+local function run_screenshot(fullscreen)
+    -- Default to selection
+    local flag = "-s"
+    local notif = "Selecting area for screenshot"
+    if fullscreen then
+        notif = "Screenshot"
+        -- Multiple monitor stitch flag
+        flag = "-m"
+    end
+    naughty.notify({
+        preset = naughty.config.presets.low,
+        title = "Screenshot",
+        text = notif
+    })
+    -- https://www.reddit.com/r/awesomewm/comments/7ktca8/hotkey_for_scrot_s_not_working_while_scrot_and/
+    awful.spawn.with_shell("sleep 0.2 && scrot " .. flag .. " -e 'mv $f ~/pictures/screenshots/ss.$$(date +%d-%m-%y.%H:%M:%S).png'", false)
+end
+
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -178,7 +197,11 @@ local function set_wallpaper(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.maximized(wallpaper, s, true)
+        if beautiful.wallpaper_tiled_offset ~= nil then
+            gears.wallpaper.tiled(wallpaper, s, wallpaper_tiled_offset)
+        else
+            gears.wallpaper.maximized(wallpaper, s, true)
+        end
     end
 end
 
@@ -190,7 +213,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[2])
 
     -- Create a promptbox for each screen
     s.runpromptbox = awful.widget.prompt()
@@ -244,9 +267,10 @@ awful.screen.connect_for_each_screen(function(s)
         },
         s.wibox_tasklist, -- Middle widget
         { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            awful.widget.keyboardlayout(),
             wibox.widget.systray(),
+            textseparator,
+            layout = wibox.layout.fixed.horizontal,
+            network_status,
             textclock,
             s.layoutbox,
         },
@@ -308,9 +332,6 @@ globalkeys = gears.table.join(
 
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
-              {description = "quit awesome", group = "awesome"}),
-
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
@@ -359,7 +380,7 @@ globalkeys = gears.table.join(
     -- Dmenu
     awful.key({ modkey }, "x",
         function ()
-            awful.spawn("dmenu_run " .. beautiful.dmenu_string)
+            awful.spawn(string.format("dmenu_run %s", isa_conf.dmenu_string))
         end,
         { description = "Dmenu", group = "awesome" }
     ),
@@ -543,9 +564,8 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true }
     },
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
+    { rule = { class = "discord" },
+        properties = { screen = 1, tag = "2" } },
 }
 
 
@@ -617,3 +637,4 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 awful.spawn.with_shell("compton", false);
+awful.spawn.with_shell("discord", false);

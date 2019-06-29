@@ -6,15 +6,19 @@ local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
 local theme_dir = gfs.get_xdg_config_home() .. "awesome/isa/"
+local taglist_square_size = dpi(4)
 
 local theme = {}
+theme.wallpaper = "~/pictures/wallpapers/wall"
+theme.wallpaper_tiled_offset = 0
 
-theme.wallpaper = "~/Pictures/Wallpapers/flowers-1440p.jpg"
+theme.font          = "Tewi 8"
 
-theme.font          = "Leggie 8"
+theme.error_text_color = "#b56262"
+theme.success_text_color = "#6aa671"
 
-theme.bg_normal     = "#2b2b2b"
-theme.bg_focus      = "#6f6670"
+theme.bg_normal     = "#1b1b1b"
+theme.bg_focus      = "#bf6976"
 theme.bg_urgent     = "#ea6e7a"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
@@ -25,12 +29,12 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = dpi(4)
-theme.border_width  = dpi(0)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.border_width  = dpi(4)
+theme.border_normal = "#2b2b2b"
+theme.border_focus  = "#bf6976"
 theme.border_marked = "#91231c"
 
-theme.titlebar_size = 30
+theme.titlebar_size = 0
 
 -- Top-bar (panel wibox)
 theme.topbar_bg = "#1b1b1b"
@@ -39,10 +43,7 @@ theme.topbar_position = "top" -- "top"/"left"/"bottom"/"right"
 theme.tasklist_bg_normal = "#2b2b2b"
 theme.tasklist_bg_focus  = theme.bg_focus
 
-theme.dmenu_string = "-fn 'CtrlD-8' -nb '#1b1b1b' -nf '#fff' -sb '#6f6670' -h 30 -b -s 0 -dim 0.5"
-
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
@@ -109,6 +110,5 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 
-return theme
 
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
+return theme
