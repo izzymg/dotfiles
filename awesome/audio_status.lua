@@ -1,5 +1,8 @@
 local wibox = require("wibox")
 local awful = require("awful")
+local beautiful = require("beautiful")
+
+local error_color = beautiful.error_text_color or "red"
 
 local audio_status = wibox.widget{
     widget = wibox.widget.textbox
@@ -12,7 +15,7 @@ awful.widget.watch("bash -c 'pulsemixer --get-mute --get-volume'", 1,
         local newline = string.find(out, "\n") + 1
         local mute_line = string.sub(out, 1, 1)
 
-        local volume = "Muted"
+        local volume = string.format("<span color='%s'>Muted</span>", error_color)
 
         if mute_line ~= "1" then
             local volume_line = string.sub(out, newline, string.len(out))

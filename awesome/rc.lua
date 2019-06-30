@@ -113,7 +113,7 @@ textclock = wibox.widget.textclock()
 
 -- Blank space
 textseparator = wibox.widget{
-    text = "   ",
+    text = "  |  ",
     widget = wibox.widget.textbox
 }
 
@@ -270,7 +270,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.wibox_tasklist, -- Middle widget
         { -- Right widgets
             wibox.widget.systray(),
-            textseparator,
+            wibox.widget.textbox("  "),
             audio_status,            
             textseparator,
             ram_status,

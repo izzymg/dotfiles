@@ -19,7 +19,7 @@ local error_color = beautiful.error_text_color or "red"
 -- Main layout
 local network_status = wibox.widget{
     ping_success,
-    wibox.widget.textbox(" | "),
+    wibox.widget.textbox(" - "),
     active_network,
     layout = wibox.layout.fixed.horizontal   
 }
@@ -45,7 +45,7 @@ local function update_active_network_status()
         function(out, err, reason, code)
             local stripped_output = string.sub(out, 3, string.len(out) - 1)
             if string.len(stripped_output) > 0 then
-                active_network.markup = string.format("Network: <b>%s</b>", stripped_output)
+                active_network.markup = string.format("<b>%s</b>", stripped_output)
             else
                 active_network.markup = "<b>No network</b>"
             end
