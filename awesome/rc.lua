@@ -40,6 +40,7 @@ end
 beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/isa.lua")
 
 local network_status = require("network_status")
+local ram_status = require("ram_status")
 
 -- Try to pull configuration, pull default conf and notify on failure
 local isa_conf_status, isa_conf = pcall(require, "config.config")
@@ -268,6 +269,8 @@ awful.screen.connect_for_each_screen(function(s)
         s.wibox_tasklist, -- Middle widget
         { -- Right widgets
             wibox.widget.systray(),
+            textseparator,
+            ram_status,
             textseparator,
             layout = wibox.layout.fixed.horizontal,
             network_status,
@@ -565,7 +568,7 @@ awful.rules.rules = {
     },
 
     { rule = { class = "discord" },
-        properties = { screen = 1, tag = "2" } },
+        properties = { screen = 1, tag = "3" } },
 }
 
 
