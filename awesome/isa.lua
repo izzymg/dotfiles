@@ -9,7 +9,10 @@ local theme_dir = gfs.get_xdg_config_home() .. "awesome/isa/"
 local taglist_square_size = dpi(4)
 
 local theme = {}
+
 theme.wallpaper = "~/pictures/wallpapers/wall"
+
+-- Set this to nil to disable wallpaper tiling entirelyssws
 theme.wallpaper_tiled_offset = 0
 
 theme.font          = "Tewi 8"

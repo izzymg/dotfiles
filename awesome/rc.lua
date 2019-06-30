@@ -16,7 +16,7 @@ require("awful.hotkeys_popup.keys")
 if awesome.startup_errors then
     naughty.notify({
         preset = naughty.config.presets.critical,
-        title = "Oops, there were errors during startup!",
+        title = "Critical error during startup",
         text = awesome.startup_errors
     })
 end
@@ -31,7 +31,7 @@ do
 
         naughty.notify({
             preset = naughty.config.presets.critical,
-            title = "Oops, an error happened!",
+            title = "Critial error",
             text = tostring(err) }
         )
         in_error = false
@@ -60,16 +60,16 @@ awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    --awful.layout.suit.tile.bottom,
+    --awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    --awful.layout.suit.fair.horizontal,
+    --awful.layout.suit.spiral,
+    --awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    --awful.layout.suit.max.fullscreen,
+    --awful.layout.suit.magnifier,
+    --awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -190,13 +190,13 @@ local tasklist_buttons = gears.table.join(
 )
 
 local function set_wallpaper(s)
-    -- Wallpaper
     if beautiful.wallpaper then
         local wallpaper = beautiful.wallpaper
         -- If wallpaper is a function, call it with the screen
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
+        -- Allow wallpaper tiling
         if beautiful.wallpaper_tiled_offset ~= nil then
             gears.wallpaper.tiled(wallpaper, s, wallpaper_tiled_offset)
         else
@@ -635,6 +635,3 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
-awful.spawn.with_shell("compton", false);
-awful.spawn.with_shell("discord", false);
