@@ -28,7 +28,7 @@ local function update_ping_status()
     awful.spawn.easy_async_with_shell(
         "ping -c 1 8.8.8.8",
         function(out, err, reason, code)
-            ping_status = string.format("<span color='%s'>Internet reachable", success_color)
+            local ping_status = string.format("<span color='%s'>Internet reachable", success_color)
             if code ~= 0 then
                 ping_status = string.format("<span color='%s'>Internet unreachable", error_color)
             end
@@ -43,7 +43,7 @@ local function update_active_network_status()
     awful.spawn.easy_async_with_shell(
         "netctl list | grep '^*'",
         function(out, err, reason, code)
-            stripped_output = string.sub(out, 3, string.len(out) - 1)
+            local stripped_output = string.sub(out, 3, string.len(out) - 1)
             if string.len(stripped_output) > 0 then
                 active_network.markup = string.format("Network: <b>%s</b>", stripped_output)
             else

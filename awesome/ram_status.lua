@@ -10,9 +10,9 @@ local function format_mem(mem)
 end
 
 awful.widget.watch('bash -c "free | grep -z Mem.*Swap.*"', 1,
-    function(widget, stdout, stderr, exitreason, exitcode)
+    function(widget, out, err, reason, code)
         local total, used, free, shared, buff_cache, available, total_swap, used_swap, free_swap =
-            stdout:match("(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*Swap:%s*(%d+)%s*(%d+)%s*(%d+)")
+            out:match("(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*Swap:%s*(%d+)%s*(%d+)%s*(%d+)")
             widget.markup = string.format(
                 "Mem: %s/%s | Swap: %s/%s",
                 format_mem(used), format_mem(total), format_mem(used_swap), format_mem(total_swap)

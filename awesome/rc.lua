@@ -41,6 +41,7 @@ beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/isa.lua")
 
 local network_status = require("network_status")
 local ram_status = require("ram_status")
+local audio_status = require("audio_status")
 
 -- Try to pull configuration, pull default conf and notify on failure
 local isa_conf_status, isa_conf = pcall(require, "config.config")
@@ -270,10 +271,13 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             wibox.widget.systray(),
             textseparator,
+            audio_status,            
+            textseparator,
             ram_status,
             textseparator,
             layout = wibox.layout.fixed.horizontal,
             network_status,
+            textseparator,
             textclock,
             s.layoutbox,
         },
