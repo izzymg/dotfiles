@@ -21,7 +21,7 @@ local network_status = wibox.widget{
     ping_success,
     wibox.widget.textbox(" - "),
     active_network,
-    layout = wibox.layout.fixed.horizontal   
+    layout = wibox.layout.fixed.horizontal
 }
 
 local function update_ping_status()
@@ -60,7 +60,7 @@ local function update()
 end
 
 local timer = gears.timer{
-    timeout = 25,
+    timeout = 60,
     call_now = true,
     autostart = true,
     callback = update
