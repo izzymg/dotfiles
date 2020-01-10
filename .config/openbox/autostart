@@ -1,0 +1,7 @@
+# Set second monitor to left
+mons -e left
+# Wallpaper
+nitrogen --restore
+discord &
+picom &
+tint2 &

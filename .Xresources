@@ -1,7 +1,7 @@
 ! Xresources
 
 ! Font
-URxvt.font: 			xft:CtrlD:size=12
+URxvt.font: 			xft:Fira Code Medium:size=11
 URxvt.letterSpacing: 		2
 
 ! Scrollbar
@@ -10,14 +10,14 @@ URxvt.scrollWithBuffer: 	true
 URxvt.scrollTtyKeypress: 	true
 URxvt.scrollBar: 		false
 
-URxvt.internalBorder:           10
+URxvt.internalBorder:           15
 
 ! Colors
 
-URxvt.background: 		#1b1b1b
+URxvt.background: 		#242424
 URxvt.foreground:		#f4f4f4
 
-URxvt.color0:           	#1b1b1b
+URxvt.color0:           	#3b3b3b
 URxvt.color8:           	#131313
 
 URxvt.color1:           	#8B4747
