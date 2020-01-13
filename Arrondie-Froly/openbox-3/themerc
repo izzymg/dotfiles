@@ -1,7 +1,8 @@
 # Decorator
 window.active.title.bg.color: #fd7980
 window.inactive.title.bg.color: #ffffff
-window.*.label.text.color: #fff
+window.active.label.text.color: #fff
+window.inactive.label.text.color: #9e9e9e
 window.*.button.*.image.color: #474c57
 
 # Borders
