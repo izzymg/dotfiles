@@ -21,9 +21,9 @@
 			<command>urxvt</command>
 		</action>
 	</item>
-  	<item label="termite">
+  	<item label="konsole">
 		<action name="Execute">
-			<command>termite</command>
+			<command>konsole</command>
 		</action>
 	</item>
   <item label="firefox">
