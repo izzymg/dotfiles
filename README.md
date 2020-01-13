@@ -18,3 +18,7 @@ vim-plug + .config/nvim
 ## Fonts
 
 Noto, Fira
+
+## GTK theme
+
+Paper
