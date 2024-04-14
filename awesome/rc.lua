@@ -43,7 +43,7 @@ end
 beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
 
 -- Settings
-terminal = "alacritty ~"
+terminal = "alacritty"
 editor = "vim"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
