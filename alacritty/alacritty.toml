@@ -1,0 +1,9 @@
+import = [
+	"~/.config/alacritty/themes/themes/nightfox.toml"
+]
+shell = "zsh"
+working_directory = "/home/ysxbel"
+[window]
+padding = { x = 15, y = 15 }
+[font]
+size = 11
