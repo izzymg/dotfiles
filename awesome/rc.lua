@@ -16,6 +16,8 @@ local common = require("awful.widget.common")
 local vicious = require("vicious")
 local volume_widget = require("awesome-wm-widgets.pactl-widget.volume")
 
+local dmenu_cmd = "dmenu_run -fn 'Fira Code-9' -nb '#131a24' -sb '#9d79d6' -nf '#fff' -p 'uwu ~' -l 3 -i"
+
 -- Handle startup errors
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -45,7 +47,6 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
 -- Settings
 terminal = "alacritty"
 editor = "vim"
-editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -57,7 +58,6 @@ awful.layout.layouts = {
 -- Menu
 menulayout = {
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end },
 }
@@ -133,8 +133,6 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     awful.tag({ "1", "2"}, s, awful.layout.layouts[1])
 
-    -- Create a promptbox for each screen
-    s.promptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.layoutbox = awful.widget.layoutbox(s)
@@ -186,7 +184,6 @@ awful.screen.connect_for_each_screen(function(s)
         {
             layout = wibox.layout.fixed.horizontal,
             s.taglist,
-            s.promptbox,
         },
 	-- mid
 	s.tasklist,
@@ -277,8 +274,8 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().promptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
+    awful.key({ modkey }, "r", function () awful.spawn(dmenu_cmd) end,
+              {description = "run dmenu", group = "launcher"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
