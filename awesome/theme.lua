@@ -6,11 +6,11 @@ local themes_path = require("gears.filesystem").get_themes_dir()
 
 local theme = {}
 theme.font          = "IBM Plex Mono Bold 9"
-theme.accent        = "#9d79d6"
+theme.accent        = "#f5c2e7"
 theme.bg_focus      = "#192330"
 theme.bg_normal     = "#131a24"
 theme.bg_urgent     = "#fce94f"
-theme.bg_minimize   = "#0067ce"
+theme.bg_minimize   = "#fab387"
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#fff"
@@ -18,9 +18,9 @@ theme.fg_focus      = "#fff"
 theme.fg_urgent     = "#fff"
 theme.fg_minimize   = "#fff"
 
-theme.useless_gap   = dpi(10)
-theme.border_width  = dpi(2)
-theme.border_normal = "#634a5e"
+theme.useless_gap   = dpi(20)
+theme.border_width  = dpi(1)
+theme.border_normal = "#cba6f7"
 theme.border_focus = theme.accent
 theme.border_marked = "#eeeeec"
 

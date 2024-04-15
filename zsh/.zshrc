@@ -19,7 +19,8 @@ zstyle ':vcs_info:git:*' formats '%b '
 
 # prompt
 setopt PROMPT_SUBST
-PROMPT='%F{blue}%~%f %F{red}${vcs_info_msg_0_}%f$ '
+autoload -U colors && colors
+PROMPT='%F{magenta}%~%f %F{blue}${vcs_info_msg_0_}%f$ '
 
 # make directory completion cute
 zstyle ':completion:*' menu select
