@@ -16,6 +16,7 @@ set.shiftwidth = 4
 set.termguicolors = true
 set.rtp:prepend(lazypath)
 set.number = true
+set.autoindent = true
 
 vim.keymap.set('', '<MiddleMouse>', '<Nop>', { remap = false })
 
