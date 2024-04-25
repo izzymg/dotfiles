@@ -46,6 +46,8 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
 
 -- Settings
 terminal = "alacritty"
+net_browser = "firefox"
+file_explorer = "thunar"
 editor = "vim"
 modkey = "Mod4"
 
@@ -257,6 +259,10 @@ globalkeys = gears.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey,           }, "i", function () awful.spawn(net_browser) end,
+              {description = "open internet browser", group = "launcher"}),
+    awful.key({ modkey,           }, "e", function () awful.spawn(file_explorer) end,
+              {description = "open file explorer", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
