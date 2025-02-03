@@ -17,10 +17,6 @@ autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '%b '
 
-# prompt
-setopt PROMPT_SUBST
-autoload -U colors && colors
-PROMPT='%F{magenta}%~%f %F{blue}${vcs_info_msg_0_}%f$ '
 
 # make directory completion cute
 zstyle ':completion:*' menu select
@@ -32,5 +28,12 @@ bindkey "^[[3~" delete-char
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 
-# aliases
-alias vim='nvim'
+
+# fnm
+FNM_PATH="/home/izzy/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
+fi
+
+export PATH="~/.local/bin:$PATH"
