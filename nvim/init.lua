@@ -43,7 +43,7 @@ local plugins = {
 }
 require("lazy").setup(plugins, opts)
 
--- LSP Config
+vim.g.mapleader = " "
 vim.opt.signcolumn = 'yes'
 local cmp = require("cmp")
 
@@ -76,24 +76,46 @@ cmp.setup({
 })
 
 
-local lspconfig_defaults = require('lspconfig').util.default_config
-lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lspconfig_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
-)
+local lspconfig_defaults = vim.lsp.config('*', {
+	capabilities = {
+		require('cmp_nvim_lsp').default_capabilities()
+	}
+})
+
+vim.diagnostic.config({
+	virtual_text = true,
+	signs = true,
+})
 
 -- C++
-require('lspconfig').clangd.setup{}
-
--- PHP
-require('lspconfig').phpactor.setup{ on_attach = on_attach, capabilities = capabilities }
+vim.lsp.enable('clangd')
 
 -- JS
-require('lspconfig').ts_ls.setup{}
+vim.lsp.enable('ts_ls')
 
 -- Rust
-require('lspconfig').rust_analyzer.setup{}
+vim.lsp.enable('rust_analyzer')
+
+--vim.api.nvim_create_autocmd("FileType", {
+--  pattern = "rust",
+--  callback = function()
+--    vim.opt_local.makeprg = "cargo"
+--    vim.opt_local.errorformat = [[%f:%l:%c: %m]]
+--  end,
+--})
+
+-- Run program keybind
+vim.keymap.set('n', '<leader>r', function()
+	if vim.bo.filetype == 'rust' then
+		vim.cmd('botright 15split | terminal cargo run')
+		vim.cmd('startinsert')
+		vim.api.nvim_create_autocmd("TermClose", {
+			callback = function()
+			   vim.cmd("close")
+			end
+		})
+	end
+end, { desc = "Run program" })
 
 -- Git
 require('gitsigns').setup()
@@ -130,7 +152,6 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, opts)
 vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
-vim.keymap.set('n', '<leader>kk', function() vim.cmd.RustLsp{ 'hover', 'actions' } end, opts)
 vim.keymap.set('n', '<leader>kn', vim.lsp.buf.rename, opts)
 vim.keymap.set('n', '<leader>kf', vim.lsp.buf.format, opts)
 vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
@@ -149,13 +170,13 @@ require("catppuccin").setup({
 })
 
 
--- Airline bar
-local ctp_feline = require('catppuccin.groups.integrations.feline')
-ctp_feline.setup({
-})
+-- Airline bar - catppuccin feline integration might be dead?
+--local ctp_feline = require('catppuccin.groups.integrations.feline')
+--ctp_feline.setup({
+--})
 
 require("feline").setup({
-    components = ctp_feline.get()
+    -- components = ctp_feline.get()
 })
 
 require('feline').statuscolumn.setup()

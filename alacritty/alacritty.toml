@@ -6,7 +6,7 @@ working_directory = "/home/ysxbel"
 [window]
 padding = { x = 35, y = 25 }
 [font]
-size = 11
+size = 12
 [mouse]
 bindings = [
 	{ mouse = "Middle", Action = "None"  }
