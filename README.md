@@ -5,3 +5,7 @@
 * Neovim 
 * Alacritty
 * Fontconfig
+
+### nvim + ts_ls + vue_ls
+
+Run `:MasonInstall vue-language-server typescript-language-server` once

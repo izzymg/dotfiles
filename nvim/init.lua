@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -29,6 +30,7 @@ local plugins = {
 		"nvim-telescope/telescope.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" }
 	},
+	{ 'nvim-telescope/telescope-dap.nvim' },
 	{ "nvim-treesitter/nvim-treesitter" },
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{
@@ -39,10 +41,23 @@ local plugins = {
 	{ 'lewis6991/gitsigns.nvim' },
 	{  "freddiehaddad/feline.nvim" },	
 	{ "nvim-tree/nvim-web-devicons" },
-
+	{ 'mfussenegger/nvim-dap' },
+	{ "folke/lazydev.nvim" },
+	{
+		"igorlfs/nvim-dap-view",
+        ---@module 'dap-view'
+        ---@type dapview.Config
+        opts = {},
+	},
+	{
+		"mason-org/mason.nvim",
+		opts = {}
+	}
 }
 require("lazy").setup(plugins, opts)
-
+require("lazydev").setup({
+  library = { "nvim-dap-ui" },
+})
 vim.g.mapleader = " "
 vim.opt.signcolumn = 'yes'
 local cmp = require("cmp")
@@ -91,10 +106,28 @@ vim.diagnostic.config({
 vim.lsp.enable('clangd')
 
 -- JS
+local vue_language_server_path = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server'
 vim.lsp.enable('ts_ls')
+vim.lsp.config('ts_ls', {
+on_attach = on_attach,
+  capabilities = capabilities,
+  init_options = {
+    plugins = { 
+      {
+        name = "@vue/typescript-plugin",
+        location = vue_language_server_path,
+        languages = { "vue" },
+      },
+    },
+  },
+  filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+})
+
+vim.lsp.enable('vue_ls')
 
 -- Rust
 vim.lsp.enable('rust_analyzer')
+
 
 --vim.api.nvim_create_autocmd("FileType", {
 --  pattern = "rust",
@@ -147,6 +180,7 @@ require('telescope').setup{
         }
       }
 }
+require('telescope').load_extension('dap')
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, opts)
