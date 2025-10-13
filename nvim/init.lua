@@ -142,11 +142,6 @@ vim.keymap.set('n', '<leader>r', function()
 	if vim.bo.filetype == 'rust' then
 		vim.cmd('botright 15split | terminal cargo run')
 		vim.cmd('startinsert')
-		vim.api.nvim_create_autocmd("TermClose", {
-			callback = function()
-			   vim.cmd("close")
-			end
-		})
 	end
 end, { desc = "Run program" })
 
@@ -183,6 +178,7 @@ require('telescope').setup{
 require('telescope').load_extension('dap')
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
+vim.keymap.set('n', '<leader>fd', builtin.diagnostics, opts)
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, opts)
 vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
