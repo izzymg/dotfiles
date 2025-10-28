@@ -32,14 +32,18 @@ local plugins = {
 	},
 	{ 'nvim-telescope/telescope-dap.nvim' },
 	{ "nvim-treesitter/nvim-treesitter" },
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	--{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{ "Shatur/neovim-ayu" },
 	{
 		"EdenEast/nightfox.nvim", 
 		lazy = false, 
 		priority = 1000, 
 	},
 	{ 'lewis6991/gitsigns.nvim' },
-	{  "freddiehaddad/feline.nvim" },	
+	{
+		'nvim-lualine/lualine.nvim',
+		dependencies = { 'nvim-tree/nvim-web-devicons' }
+	},	
 	{ "nvim-tree/nvim-web-devicons" },
 	{ 'mfussenegger/nvim-dap' },
 	{ "folke/lazydev.nvim" },
@@ -128,15 +132,6 @@ vim.lsp.enable('vue_ls')
 -- Rust
 vim.lsp.enable('rust_analyzer')
 
-
---vim.api.nvim_create_autocmd("FileType", {
---  pattern = "rust",
---  callback = function()
---    vim.opt_local.makeprg = "cargo"
---    vim.opt_local.errorformat = [[%f:%l:%c: %m]]
---  end,
---})
-
 -- Run program keybind
 vim.keymap.set('n', '<leader>r', function()
 	if vim.bo.filetype == 'rust' then
@@ -189,26 +184,16 @@ vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
 vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
 
--- Color
-vim.cmd.colorscheme "duskfox"
-require("catppuccin").setup({
-	flavour = "macchiato",
-	integrations = {
-		gitsigns = true,
-		treesitter = true,
+-- Colors
+require('ayu').setup({
+    mirage = true, 
+    terminal = true, 
+    overrides = {}, 
+})
+vim.cmd.colorscheme "ayu-mirage"
+-- Lualine
+require('lualine').setup {
+	options = {
+		theme = 'ayu'
 	}
-})
-
-
--- Airline bar - catppuccin feline integration might be dead?
---local ctp_feline = require('catppuccin.groups.integrations.feline')
---ctp_feline.setup({
---})
-
-require("feline").setup({
-    -- components = ctp_feline.get()
-})
-
-require('feline').statuscolumn.setup()
-require('feline').winbar.setup()
-
+}
